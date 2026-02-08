@@ -183,7 +183,7 @@ const ResumeButton = () => {
     >
       <Magnetic>
         <motion.a
-          href="#"
+          href="/document/Asad_Majeed_CV_Improved.docx"
           download
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -282,14 +282,21 @@ const App: React.FC = () => {
             </motion.h2>
             
             <div className="flex space-x-6 mb-24">
-              {[Linkedin, Github, Twitter, Mail].map((Icon, i) => (
+              {[
+                { Icon: Linkedin, href: "https://www.linkedin.com/in/muhammad-asad-a09381327" },
+                { Icon: Github, href: "https://github.com/MuhammadAsadMajeed" },
+                { Icon: Twitter, href: "#" },
+                { Icon: Mail, href: "#" }
+              ].map((social, i) => (
                 <Magnetic key={i}>
                   <motion.a
-                    href="#"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.2, backgroundColor: "rgba(255,255,255,1)", color: "black", borderColor: "white" }}
                     className="w-16 h-16 rounded-[1.8rem] bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-white/40 transition-all duration-700"
                   >
-                    <Icon size={24} />
+                    <social.Icon size={24} />
                   </motion.a>
                 </Magnetic>
               ))}

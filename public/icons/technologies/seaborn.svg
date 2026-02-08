@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="seabornGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5c7da2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#36495b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Circle background -->
+  <circle cx="50" cy="50" r="48" fill="url(#seabornGrad)"/>
+  <!-- Data visualization bars -->
+  <rect x="20" y="60" width="8" height="20" fill="#ffffff" opacity="0.8"/>
+  <rect x="32" y="50" width="8" height="30" fill="#ffffff" opacity="0.9"/>
+  <rect x="44" y="40" width="8" height="40" fill="#ffffff"/>
+  <rect x="56" y="45" width="8" height="35" fill="#ffffff" opacity="0.9"/>
+  <rect x="68" y="55" width="8" height="25" fill="#ffffff" opacity="0.8"/>
+  <!-- Decorative curve -->
+  <path d="M 20 70 Q 50 30 80 70" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.6"/>
+</svg>

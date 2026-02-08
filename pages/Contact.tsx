@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
               <div className="bg-white/5 p-4 rounded-2xl border border-white/10 text-white"><Linkedin size={20} /></div>
               <div>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">LinkedIn</p>
-                <p className="text-lg font-medium">linkedin.com/in/muhammadasad</p>
+                <p className="text-lg font-medium">www.linkedin.com/in/muhammad-asad-a09381327</p>
               </div>
             </div>
           </div>

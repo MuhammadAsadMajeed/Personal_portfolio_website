@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin, ChevronDown, MessageSquare, Twitter, Mail, ArrowUpRight, Send, MapPin, User } from 'lucide-react';
-import { PROJECTS, SKILLS_ROW_1, SKILLS_ROW_2, REVIEWS, FAQS } from '../constants.tsx';
+import { PROJECTS, SKILLS, REVIEWS, FAQS } from '../constants.tsx';
 import { CursorContext, Magnetic } from '../Shared.tsx';
 import { Skill } from '../types.ts';
 import { useNavigate } from 'react-router-dom';
@@ -123,17 +123,24 @@ const Hero = () => {
           </div>
 
           <div className="relative z-10 flex gap-4 mt-12">
-            {[Linkedin, Github, Twitter, Mail].map((Icon, i) => (
+            {[
+              { Icon: Linkedin, href: "https://www.linkedin.com/in/muhammad-asad-a09381327" },
+              { Icon: Github, href: "https://github.com/MuhammadAsadMajeed" },
+              { Icon: Twitter, href: "#" },
+              { Icon: Mail, href: "#" }
+            ].map((social, i) => (
               <Magnetic key={i}>
                 <motion.a
-                  href="#"
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + i * 0.1 }}
                   whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.08)", borderColor: "rgba(255,255,255,0.2)" }}
                   className="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex items-center justify-center text-white/30 hover:text-white transition-all duration-500"
                 >
-                  <Icon size={20} />
+                  <social.Icon size={20} />
                 </motion.a>
               </Magnetic>
             ))}
@@ -281,6 +288,8 @@ const Projects = () => {
 };
 
 const SkillCard = ({ skill, index }: { skill: Skill, index: number }) => {
+  const isLocalIcon = skill.icon.startsWith('/');
+  
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, y: 30 }}
@@ -301,7 +310,7 @@ const SkillCard = ({ skill, index }: { skill: Skill, index: number }) => {
         <img 
           src={skill.icon} 
           alt={skill.name} 
-          className="w-16 h-16 md:w-20 md:h-20 group-hover:scale-110 transition-all duration-500 object-contain invert group-hover:invert-0"
+          className={`w-16 h-16 md:w-20 md:h-20 group-hover:scale-110 transition-all duration-500 object-contain ${!isLocalIcon ? 'invert group-hover:invert-0' : ''}`}
         />
       </motion.div>
       <span className="mt-8 text-[10px] font-black tracking-[0.5em] text-white/30 uppercase group-hover:text-white transition-colors">
@@ -319,18 +328,10 @@ const Skills = () => {
         <span className="text-white/20"><CharReveal delay={0.4}>Skills</CharReveal></span>
       </h2>
       
-      <div className="flex flex-col items-center space-y-12">
-        <div className="flex flex-wrap justify-center gap-12 md:gap-20">
-          {SKILLS_ROW_1.map((skill, i) => (
-            <SkillCard key={skill.name} skill={skill} index={i} />
-          ))}
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-12 md:gap-24">
-          {SKILLS_ROW_2.map((skill, i) => (
-            <SkillCard key={skill.name} skill={skill} index={i + 6} />
-          ))}
-        </div>
+      <div className="flex flex-wrap justify-center gap-12 md:gap-20">
+        {SKILLS.map((skill, i) => (
+          <SkillCard key={skill.name} skill={skill} index={i} />
+        ))}
       </div>
     </section>
   );
