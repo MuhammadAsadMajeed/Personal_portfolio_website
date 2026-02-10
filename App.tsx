@@ -183,7 +183,7 @@ const ResumeButton = () => {
     >
       <Magnetic>
         <motion.a
-          href="/document/Asad_Majeed_CV_Improved.docx"
+          href="/document/Asad_resume.pdf"
           download
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
