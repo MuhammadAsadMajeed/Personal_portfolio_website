@@ -6,10 +6,11 @@ import { PROJECTS, SKILLS, REVIEWS, FAQS } from '../constants.tsx';
 import { CursorContext, Magnetic } from '../Shared.tsx';
 import { Skill } from '../types.ts';
 import { useNavigate } from 'react-router-dom';
+import { contactAPI, ContactFormData } from '../services/api';
 
 const CharReveal = ({ children, className = "", delay = 0 }: { children: string, className?: string, delay?: number }) => {
   const characters = children.split("");
-  
+
   const container = {
     hidden: { opacity: 0 },
     visible: (i: number = 1) => ({
@@ -63,7 +64,7 @@ const CharReveal = ({ children, className = "", delay = 0 }: { children: string,
 
 const SectionDivider = () => (
   <div className="w-full py-32 md:py-64 flex justify-center items-center overflow-hidden">
-    <motion.div 
+    <motion.div
       initial={{ width: 0, opacity: 0 }}
       whileInView={{ width: "60%", opacity: 0.15 }}
       viewport={{ once: false }}
@@ -89,7 +90,7 @@ const Hero = () => {
   return (
     <section className="min-h-screen pt-48 pb-20 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-stretch">
       {/* Left Column: Profile Card */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -98,20 +99,20 @@ const Hero = () => {
         <div className="h-full bg-white/[0.03] border border-white/[0.08] rounded-[4rem] p-10 flex flex-col justify-between backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
           {/* Subtle background glow */}
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-white/5 rounded-full blur-[100px] group-hover:bg-white/10 transition-all duration-1000"></div>
-          
+
           <div className="relative z-10 space-y-10">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.02, rotate: -1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="relative w-full aspect-square overflow-hidden rounded-[3rem] border border-white/10"
             >
-              <img 
-                src="https://picsum.photos/600/600?random=1" 
-                alt="Muhammad Asad" 
+              <img
+                src="https://picsum.photos/600/600?random=1"
+                alt="Muhammad Asad"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
               />
             </motion.div>
-            
+
             <div className="space-y-4">
               <h2 className="text-4xl font-black uppercase tracking-tighter leading-none">
                 <CharReveal>MUHAMMAD ASAD</CharReveal>
@@ -149,7 +150,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Right Column: About Description */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
@@ -165,28 +166,28 @@ const Hero = () => {
                 <CharReveal>ABOUT ME</CharReveal>
               </h1>
             </div>
-            
+
             <div className="space-y-8">
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, delay: 0.8 }}
                 className="text-xl md:text-3xl text-white/60 font-medium leading-tight"
               >
-                I create digital experiences that blend clean code with intuitive design. 
+                I create digital experiences that blend clean code with intuitive design.
               </motion.p>
-              
-              <motion.p 
+
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, delay: 1 }}
                 className="text-lg md:text-xl text-white/40 leading-relaxed max-w-2xl"
               >
                 I've been building web applications for the past two years, working with technologies like React, Node.js, MongoDB, and PostgreSQL. I design user interfaces in Figma and bring them to life with clean, responsive code. I enjoy creating websites that not only look good but also feel natural to use.
-Currently studying Data Science, I also work with Python for data analysis and machine learning. I use libraries like Pandas and NumPy to work with data, Matplotlib and Seaborn for visualization, and Scikit-learn to build predictive models. This mix of web development and data science skills helps me create applications that are both user-friendly and intelligent. Whether I'm adding smooth animations with GSAP or analyzing datasets, I love turning ideas into working solutions
+                Currently studying Data Science, I also work with Python for data analysis and machine learning. I use libraries like Pandas and NumPy to work with data, Matplotlib and Seaborn for visualization, and Scikit-learn to build predictive models. This mix of web development and data science skills helps me create applications that are both user-friendly and intelligent. Whether I'm adding smooth animations with GSAP or analyzing datasets, I love turning ideas into working solutions
               </motion.p>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.2, duration: 1 }}
@@ -205,7 +206,7 @@ Currently studying Data Science, I also work with Python for data analysis and m
 
 const ProjectCard = ({ project, index, isTall }: { project: any, index: number, isTall?: boolean }) => {
   const { setCursorType } = useContext(CursorContext);
-  
+
   return (
     <motion.a
       href={project.link}
@@ -217,14 +218,14 @@ const ProjectCard = ({ project, index, isTall }: { project: any, index: number, 
       transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={`group relative block overflow-hidden rounded-[3rem] bg-white/5 border border-white/10 ${isTall ? 'md:h-[600px] lg:h-[800px]' : 'h-[360px] md:h-[300px] lg:h-[380px]'}`}
     >
-      <motion.img 
-        src={project.image} 
-        alt={project.title} 
+      <motion.img
+        src={project.image}
+        alt={project.title}
         whileHover={{ scale: 1.15, rotate: 1 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
       />
-      
+
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-700"></div>
 
       <div className="absolute inset-0 p-12 flex flex-col justify-end">
@@ -238,7 +239,7 @@ const ProjectCard = ({ project, index, isTall }: { project: any, index: number, 
             {project.title}
           </motion.h3>
         </div>
-        
+
         <motion.div className="mt-8 flex items-center space-x-3 text-white/40 transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 delay-200 ease-[0.16,1,0.3,1]">
           <span className="text-xs font-bold uppercase tracking-widest">Explore Narrative</span>
           <ArrowUpRight size={16} />
@@ -253,10 +254,10 @@ const Projects = () => {
     <section className="py-20 px-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-baseline mb-32 gap-10">
         <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">
-          <CharReveal>Recent</CharReveal><br/>
+          <CharReveal>Recent</CharReveal><br />
           <span className="text-white/20"><CharReveal delay={0.3}>Projects</CharReveal></span>
         </h2>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
@@ -289,7 +290,7 @@ const Projects = () => {
 
 const SkillCard = ({ skill, index }: { skill: Skill, index: number }) => {
   const isLocalIcon = skill.icon.startsWith('/');
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, y: 30 }}
@@ -299,17 +300,17 @@ const SkillCard = ({ skill, index }: { skill: Skill, index: number }) => {
       className="flex flex-col items-center group cursor-pointer"
     >
       <motion.div
-        whileHover={{ 
-          y: -15, 
+        whileHover={{
+          y: -15,
           scale: 1.15,
           rotate: [0, -5, 5, 0],
           boxShadow: "0 40px 100px -20px rgba(255, 255, 255, 0.25)"
         }}
         className="bg-white/5 border border-white/10 p-10 rounded-[2.5rem] w-32 h-32 md:w-40 md:h-40 flex items-center justify-center transition-all duration-500 hover:bg-white hover:border-white shadow-xl overflow-hidden"
       >
-        <img 
-          src={skill.icon} 
-          alt={skill.name} 
+        <img
+          src={skill.icon}
+          alt={skill.name}
           className={`w-16 h-16 md:w-20 md:h-20 group-hover:scale-110 transition-all duration-500 object-contain ${!isLocalIcon ? 'invert group-hover:invert-0' : ''}`}
         />
       </motion.div>
@@ -324,10 +325,10 @@ const Skills = () => {
   return (
     <section className="py-20 px-8 max-w-7xl mx-auto text-center">
       <h2 className="text-6xl md:text-9xl font-black tracking-tighter mb-48 uppercase">
-        <CharReveal>My</CharReveal> <br/>
+        <CharReveal>My</CharReveal> <br />
         <span className="text-white/20"><CharReveal delay={0.4}>Skills</CharReveal></span>
       </h2>
-      
+
       <div className="flex flex-wrap justify-center gap-12 md:gap-20">
         {SKILLS.map((skill, i) => (
           <SkillCard key={skill.name} skill={skill} index={i} />
@@ -344,18 +345,18 @@ const Reviews = () => {
     <section className="py-40 overflow-hidden bg-white/[0.02]">
       <div className="px-8 max-w-7xl mx-auto mb-20">
         <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase">
-          <CharReveal>CLIENT</CharReveal> <br/>
+          <CharReveal>CLIENT</CharReveal> <br />
           <span className="text-white/20"><CharReveal delay={0.3}>TESTIMONIALS</CharReveal></span>
         </h2>
       </div>
-      
+
       <div className="flex whitespace-nowrap overflow-hidden">
-        <motion.div 
+        <motion.div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           animate={{ x: ["0%", "-50%"] }}
           transition={{
-            duration: 100, 
+            duration: 100,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -363,8 +364,8 @@ const Reviews = () => {
           className="flex space-x-8 px-4"
         >
           {[...REVIEWS, ...REVIEWS].map((review, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               whileHover={{ scale: 0.98 }}
               className="inline-block w-[400px] md:w-[600px] bg-white/5 border border-white/10 p-12 rounded-[3.5rem] whitespace-normal flex flex-col justify-between group hover:bg-white/10 transition-colors duration-700"
             >
@@ -399,12 +400,12 @@ const FAQSection = () => {
       </h2>
       <div className="space-y-6">
         {FAQS.map((faq, i) => (
-          <motion.div 
-            key={i} 
+          <motion.div
+            key={i}
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="border-b border-white/10 py-10 group cursor-pointer" 
+            className="border-b border-white/10 py-10 group cursor-pointer"
             onClick={() => setActive(active === i ? null : i)}
           >
             <div className="flex justify-between items-center">
@@ -436,6 +437,67 @@ const FAQSection = () => {
 };
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const [status, setStatus] = useState<{
+    type: 'idle' | 'loading' | 'success' | 'error';
+    message: string;
+  }>({
+    type: 'idle',
+    message: ''
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus({ type: 'loading', message: 'Sending...' });
+
+    try {
+      const response = await contactAPI.submit(formData);
+
+      if (response.success) {
+        setStatus({
+          type: 'success',
+          message: response.message || 'Message sent successfully!'
+        });
+
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setStatus({ type: 'idle', message: '' });
+        }, 5000);
+      }
+    } catch (error: any) {
+      setStatus({
+        type: 'error',
+        message: error.message || 'Failed to send message. Please try again.'
+      });
+
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setStatus({ type: 'idle', message: '' });
+      }, 5000);
+    }
+  };
+
   return (
     <section id="contact-me" className="py-32 px-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row gap-20">
@@ -473,29 +535,84 @@ const ContactSection = () => {
           className="w-full md:w-1/2 bg-white/[0.03] border border-white/[0.08] p-12 rounded-[4rem] backdrop-blur-xl shadow-2xl relative overflow-hidden"
         >
            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-          <form className="space-y-8 relative z-10" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-8 relative z-10" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-3">
                 <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-2">Your Name</label>
-                <input type="text" placeholder="John Doe" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10" />
+                <input 
+                  type="text" 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="John Doe" 
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10" 
+                  required
+                  minLength={2}
+                  maxLength={50}
+                />
               </div>
               <div className="space-y-3">
                 <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-2">Email Address</label>
-                <input type="email" placeholder="john@example.com" className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10" />
+                <input 
+                  type="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="john@example.com" 
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10" 
+                  required
+                />
               </div>
             </div>
             <div className="space-y-3">
               <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-2">Message</label>
-              <textarea rows={5} placeholder="Tell me about your project..." className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10 resize-none"></textarea>
+              <textarea 
+                rows={5} 
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Tell me about your project..." 
+                className="w-full bg-white/5 border border-white/10 rounded-3xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all font-medium text-white placeholder:text-white/10 resize-none"
+                required
+                minLength={10}
+                maxLength={1000}
+              ></textarea>
             </div>
-            <Magnetic>
-              <button className="w-full px-14 py-6 bg-white text-black rounded-3xl font-black text-xs uppercase tracking-[0.4em] hover:bg-gray-100 transition-all flex items-center justify-center space-x-4 shadow-2xl overflow-hidden group">
-                <motion.span whileHover={{ y: -20, opacity: 0 }} className="flex items-center space-x-4">
+            
+            {status.message && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className={`p-4 rounded-2xl text-center font-bold text-sm ${
+                  status.type === 'success'
+                    ? 'bg-green-500/20 border border-green-500/50 text-green-400'
+                    : status.type === 'error'
+                    ? 'bg-red-500/20 border border-red-500/50 text-red-400'
+                    : 'bg-blue-500/20 border border-blue-500/50 text-blue-400'
+                }`}
+              >
+                {status.message}
+              </motion.div>
+            )}
+
+            <button 
+              type="submit"
+              disabled={status.type === 'loading'}
+              className="w-full px-14 py-6 bg-white text-black rounded-3xl font-black text-xs uppercase tracking-[0.4em] hover:bg-gray-100 hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-4 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {status.type === 'loading' ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                  <span>Sending...</span>
+                </>
+              ) : (
+                <>
                   <span>Send Message</span>
                   <Send size={16} />
-                </motion.span>
-              </button>
-            </Magnetic>
+                </>
+              )}
+            </button>
           </form>
         </motion.div>
       </div>
@@ -518,7 +635,7 @@ const Home: React.FC = () => {
       <SectionDivider />
       <SectionReveal><FAQSection /></SectionReveal>
       <SectionDivider />
-      
+
       <section className="py-48 px-8 max-w-7xl mx-auto text-center">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -528,14 +645,14 @@ const Home: React.FC = () => {
           className="bg-white/5 border border-white/10 rounded-[5rem] p-24 md:p-48 relative overflow-hidden group"
         >
           <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-[0.03] transition-opacity duration-1000"></div>
-          <motion.h2 
+          <motion.h2
             className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none mb-16 text-white"
           >
-            READY TO <br/> <span className="text-white/20">COLLABORATE?</span>
+            READY TO <br /> <span className="text-white/20">COLLABORATE?</span>
           </motion.h2>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <Magnetic>
-              <button 
+              <button
                 onClick={() => navigate('/contact')}
                 className="inline-flex items-center space-x-6 px-16 py-8 bg-white text-black rounded-full font-black text-xl hover:scale-105 hover:bg-gray-100 transition-all duration-500 shadow-2xl relative z-20 pointer-events-auto"
               >
@@ -544,7 +661,7 @@ const Home: React.FC = () => {
               </button>
             </Magnetic>
             <Magnetic>
-              <button 
+              <button
                 onClick={() => navigate('/about')}
                 className="inline-flex items-center space-x-6 px-16 py-8 bg-white/5 border border-white/10 text-white rounded-full font-black text-xl hover:scale-105 hover:bg-white/10 transition-all duration-500 shadow-2xl backdrop-blur-xl relative z-20 pointer-events-auto"
               >
